@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>상하이 여행 장소 모음 42곳</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@700&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#f6f7f4;--surface:#fff;--fg:#1d2320;--muted:#66706b;--line:#dfe3df;
+  --accent:#0f6f63;--accent-soft:#dcefea;--chip:#eceee9;
+  --display:"Gowun Batang",serif;--body:"IBM Plex Sans KR",system-ui,sans-serif;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#121614;--surface:#1a201d;--fg:#e7ece9;--muted:#9aa49f;--line:#2b332f;
+  --accent:#5cc4b2;--accent-soft:#1f3a35;--chip:#232a27;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121614;--surface:#1a201d;--fg:#e7ece9;--muted:#9aa49f;--line:#2b332f;
+  --accent:#5cc4b2;--accent-soft:#1f3a35;--chip:#232a27;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);line-height:1.5;
+  padding:28px max(16px,env(safe-area-inset-right,0px)) 48px max(16px,env(safe-area-inset-left,0px))}
+.wrap{max-width:680px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+h1{font-family:var(--display);font-size:1.9rem;margin:0;text-wrap:balance;letter-spacing:-.01em}
+.lede{color:var(--muted);margin:6px 0 0;font-size:.95rem}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.stat b{display:block;font-size:1.3rem;color:var(--accent)}
+.stat span{font-size:.78rem;color:var(--muted)}
+input[type=search]{width:100%;box-sizing:border-box;font:inherit;font-size:.92rem;padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--fg)}
+.row{display:flex;flex-direction:column;gap:6px}
+.lab{font-size:.74rem;letter-spacing:.08em;color:var(--muted);font-weight:600}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{border:0;background:var(--chip);color:var(--fg);font:inherit;font-size:.86rem;padding:6px 12px;border-radius:999px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--accent);color:var(--bg);font-weight:600}
+.chip:focus-visible,.btn:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+section{display:flex;flex-direction:column;gap:8px}
+h2{font-size:.78rem;letter-spacing:.08em;color:var(--muted);margin:0;font-weight:600}
+ul{list-style:none;margin:0;padding:0;background:var(--surface);border:1px solid var(--line);border-radius:12px}
+li{display:flex;gap:12px;align-items:center;padding:13px 14px;border-top:1px solid var(--line)}
+li:first-child{border-top:0}
+.info{flex:1;min-width:0}
+.name{font-weight:600;font-size:1rem}
+.zh{color:var(--muted);font-size:.83rem;overflow-wrap:anywhere}
+.area{display:inline-block;font-size:.72rem;color:var(--accent);background:var(--accent-soft);padding:1px 7px;border-radius:4px;margin-top:4px}
+.acts{display:flex;flex-direction:column;gap:6px;flex-shrink:0}
+.btn{font:inherit;font-size:.8rem;padding:6px 10px;border-radius:7px;text-align:center;text-decoration:none;cursor:pointer;white-space:nowrap}
+.go{background:var(--accent);color:var(--bg);font-weight:600;border:0}
+.cp{background:transparent;color:var(--fg);border:1px solid var(--line)}
+.note,.empty{font-size:.82rem;color:var(--muted);margin:0}
+.rvs{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.rv{font-size:.74rem;padding:3px 9px;border-radius:999px;border:1px solid var(--accent);color:var(--accent);text-decoration:none}
+.rv:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+</style></head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>상하이 여행 장소 모음 <span id="total">42</span>곳</h1>
+    <p class="lede">맛집·카페·볼거리·쇼핑을 한곳에 모았고, 다녀온 곳은 블로그 후기 링크도 달았어요. ‘고덕지도’를 누르면 앱에서 장소가 열리고, ‘복사’는 택시 기사님께 보여 줄 중국어 이름·주소를 복사해요.</p>
+  </header>
+  <div class="stats" id="stats"></div>
+  <input type="search" id="q" placeholder="장소·지역·중국어 검색" aria-label="검색">
+  <div class="row"><span class="lab">종류</span><div class="chips" id="cats" role="group" aria-label="종류 선택"></div></div>
+  <div class="row"><span class="lab">지역</span><div class="chips" id="areas" role="group" aria-label="지역 선택"></div></div>
+  <div id="list"></div>
+  <p class="note">고덕지도(Amap) 앱이 깔려 있어야 바로 열려요. 앱이 없으면 웹 지도로 열려요. 영업시간·휴무는 방문 전에 한 번 더 확인하세요.</p>
+</div>
+<script>
+const D=[
+ ["맛집","라오지스 우캉루점 (老吉士饭馆)","老吉士饭馆(天平路店)","우캉로","https://surl.amap.com/1QndTTUW5iu"],
+ ["맛집","경운화 (베이징덕)","南京西路2-68号新世界城9楼","인민광장"],
+ ["맛집","우캉맨션 젤라또 (酷矿冰淇淋)","酷矿冰淇淋(武康大楼店)","우캉로"],
+ ["맛집","훙춘 촨촨샹","南京东路299号宏伊国际广场B1层","난징동루"],
+ ["맛집","홍쿠이자 샤오룽샤 (红盔甲·小龙虾)","红盔甲·小龙虾(人民广场店)","인민광장"],
+ ["맛집","점도덕 백옥란점 (点都德)","点都德(白玉兰店)","북와이탄"],
+ ["맛집","점도덕 환위후이점 (点都德)","点都德(环宇荟店)","신톈디"],
+ ["맛집","점도덕 정대광장점 (点都德)","陆家嘴西路168号正大广场西区6楼614室","루자쭈이"],
+ ["맛집","하이디라오 제일백화점점 (海底捞)","海底捞火锅(人民广场店)","난징동루","https://surl.amap.com/59Da27cKbZB"],
+ ["맛집","헌지우이치엔 제일백화점점","很久以前羊肉串 南京东路830号第一百货商业中心","난징동루","https://surl.amap.com/1cQlMacZU6MM"],
+ ["마사지","도원향 1호점 (桃源乡 · 호텔 4층)","桃源乡 酒店4层","난징동루","https://surl.amap.com/jvYmeoWX7NR"],
+ ["맛집","헌지우이치엔 광음광장점","银城路155-167号光音广场B1层","루자쭈이"],
+ ["맛집","헌지우이치엔 난징시루 818점","很久以前羊肉串(南京西路818广场店)","난징시루"],
+ ["맛집","양쯔깐루","世纪大道8号上海国金中心D座","루자쭈이"],
+ ["맛집","CONDE 바","黄浦路60号","북와이탄"],
+ ["카페·디저트","헤이티 신세계백화점 1층 (喜茶)","喜茶 上海新世界城店","난징동루","https://surl.amap.com/Ktzc6u1z5ln"],
+ ["카페·디저트","루나베리 IFC몰 B2","LUNABERRi IFC国金中心店","루자쭈이","https://surl.amap.com/2ms6DdU14dUX"],
+ ["카페·디저트","찰리타운 IFC몰 LG1","CHARLIETOWN红茶公司","루자쭈이","https://surl.amap.com/2YtGHcMmldf9"],
+ ["카페·디저트","헤이티 세무광장점 (喜茶)","喜茶 南京东路789号上海世茂广场G层","난징동루"],
+ ["카페·디저트","릴리안 베이커리 신세계백화점 B1","莉莲 新世界城店","난징동루","https://surl.amap.com/1JnDjefj1u5ci"],
+ ["카페·디저트","루씨허버터떡","徐家汇路618号日月光中心1F-XJH-09室","톈쯔팡"],
+ ["숙소","래디슨 컬렉션 하이랜드 호텔","上海丽笙精选海仑宾馆","난징동루","https://surl.amap.com/ibRmvnM1dcAN"],
+ ["볼거리","우캉맨션 (武康大楼)","武康大楼","우캉로","https://surl.amap.com/3xqwhLjn1e2IY"],
+ ["볼거리","대한민국 임시정부 청사","大韩民国临时政府旧址","신톈디"],
+ ["볼거리","상하이 디즈니랜드","上海迪士尼乐园","디즈니","https://surl.amap.com/9y5A6tv1y1VQ"],
+ ["볼거리","디즈니 택시 타는 곳 (Y18 · 싱위안 공원 서3문)","Y18-星愿公园 西3门","디즈니","https://surl.amap.com/23t0xm2i6Dq"],
+ ["볼거리","상하이 성황묘 남문 (城隍庙)","上海城隍庙(南门)","예원"],
+ ["볼거리","푸동 미술관 (浦东美术馆)","浦东美术馆","루자쭈이"],
+ ["볼거리","톈쯔팡 (田子坊)","田子坊","톈쯔팡"],
+ ["볼거리","블랜버니 (布兰兔的植物庄园)","布兰兔的植物庄园(田子坊店)","톈쯔팡"],
+ ["볼거리","프라다 롱자이 (荣宅)","荣宅 陕西北路186号","징안"],
+ ["쇼핑","우캉맨션 기념품 우체국","武康大楼主题邮局","우캉로"],
+ ["쇼핑","다인서점 인상우캉점","大隐书局·印象武康主题店","우캉로","https://surl.amap.com/79OCRket7sG"],
+ ["쇼핑","치이카와 공식 매장 (치이카와샵)","吉伊卡哇","난징동루","https://surl.amap.com/Ao5j5KOlewa"],
+ ["쇼핑","난징동루 미니소 랜드","名创优品 MINISO LAND 南京东路","난징동루","https://surl.amap.com/98f7TVo1h0KA"],
+ ["쇼핑","칭즈 & 차레티 정대광장 3층","茶乐媞 正大广场店","루자쭈이","https://surl.amap.com/jAxLyFAOa1X"],
+ ["쇼핑","팝마트 글로벌 플래그십","泡泡玛特(全球旗舰店)","난징동루"],
+ ["쇼핑","m&m’s 스토어","m&m's(上海世茂广场店)","난징동루"],
+ ["쇼핑","칭즈 핸드크림","南京东路66号","난징동루"],
+ ["쇼핑","칭즈 타이캉루점","泰康路248弄15号","톈쯔팡"],
+ ["쇼핑","슈퍼브랜드몰 (正大广场)","正大广场","루자쭈이"],
+ ["교통","푸동공항 T2 (PVG)","上海浦东国际机场2号航站楼","푸동공항","https://surl.amap.com/2umOGlpA18e8d"],
+ ["준비","중국남방항공 왕복 후기","","공통"],
+ ["준비","상하이 이심 (로밍도깨비) 후기","","공통"]
+];
+const B="https://m.blog.naver.com/sumkhs/";
+const REV=[
+ ["푸동공항 T2","픽업 후기",B+"224473431178"],
+ ["중국남방항공","후기",B+"224474759513"],
+ ["상하이 이심","후기",B+"224476734261"],
+ ["래디슨","후기",B+"224464915502"],
+ ["도원향","후기",B+"224469509708"],
+ ["헌지우이치엔 제일백화점점","후기",B+"224461571716"],
+ ["하이디라오","후기",B+"224472119677"],
+ ["라오지스","후기",B+"224468554679"],
+ ["점도덕","배달 후기",B+"224466518443"],
+ ["홍쿠이자","배달 후기",B+"224466518443"],
+ ["루씨허","배달 후기",B+"224466518443"],
+ ["헤이티 신세계","배달 후기",B+"224466518443"],
+ ["릴리안","후기",B+"224467706765"],
+ ["루나베리","후기",B+"224467706765"],
+ ["찰리타운","후기",B+"224467706765"],
+ ["헤이티 신세계","후기",B+"224467706765"],
+ ["루씨허","후기",B+"224467706765"],
+ ["상하이 디즈니랜드","후기",B+"224465575247"],
+ ["디즈니 택시","후기",B+"224465575247"],
+ ["우캉맨션 (","스냅 후기",B+"224469116375"],
+ ["다인서점","후기",B+"224470175254"],
+ ["칭즈 & 차레티","후기",B+"224470175254"],
+ ["치이카와","후기",B+"224462585922"],
+ ["난징동루 미니소","후기",B+"224462585922"]
+];
+const rvHtml=d=>{const r=REV.filter(x=>d[1].startsWith(x[0]));return r.length?`<div class="rvs">${r.map(x=>`<a class="rv" href="${x[2]}" target="_blank" rel="noopener">${x[1]}</a>`).join("")}</div>`:""};
+const order=["맛집","카페·디저트","볼거리","쇼핑","숙소","마사지","교통","준비"];
+const areaList=[...new Set(D.map(d=>d[3]))];
+let cat="전체",area="전체",q="";
+const link=k=>"https://uri.amap.com/search?keyword="+encodeURIComponent(k)+"&city=310000&callnative=1&src=trip";
+const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const chips=(id,items,cur,key)=>{document.getElementById(id).innerHTML=items.map(a=>`<button class="chip" aria-pressed="${a===cur}" data-k="${key}" data-a="${esc(a)}">${esc(a)}</button>`).join("")};
+function render(){
+  const P=D.filter(d=>d[0]!=="준비");document.getElementById("total").textContent=P.length;
+  document.getElementById("stats").innerHTML=[["장소",P.length],["후기 글",new Set(REV.map(x=>x[2])).size],["지역",areaList.length-1]].map(s=>`<div class="stat"><b>${s[1]}</b><span>${s[0]}</span></div>`).join("");
+  chips("cats",["전체",...order],cat,"cat");
+  chips("areas",["전체",...areaList],area,"area");
+  const t=q.trim().toLowerCase();
+  const rows=D.filter(d=>(cat==="전체"||d[0]===cat)&&(area==="전체"||d[3]===area)&&(!t||(d[1]+d[2]+d[3]).toLowerCase().includes(t)));
+  const html=order.map(c=>{
+    const r=rows.filter(d=>d[0]===c);if(!r.length)return"";
+    return `<section><h2>${c} ${r.length}</h2><ul>${r.map(d=>`<li><div class="info"><div class="name">${esc(d[1])}</div>${d[2]?`<div class="zh">${esc(d[2])}</div>`:""}<span class="area">${d[3]}</span>${rvHtml(d)}</div>${d[2]?`<div class="acts"><a class="btn go" href="${d[4]||link(d[2])}" target="_blank" rel="noopener">고덕지도</a><button class="btn cp" data-t="${esc(d[2])}">복사</button></div>`:""}</li>`).join("")}</ul></section>`;
+  }).join("");
+  document.getElementById("list").innerHTML=html||'<p class="empty">조건에 맞는 장소가 없어요.</p>';
+}
+document.addEventListener("click",e=>{
+  const c=e.target.closest(".chip");
+  if(c){if(c.dataset.k==="cat")cat=c.dataset.a;else area=c.dataset.a;render();return}
+  const b=e.target.closest(".cp");
+  if(b){
+    const t=b.dataset.t;
+    const done=()=>{b.textContent="복사됨";setTimeout(()=>b.textContent="복사",1400)};
+    try{navigator.clipboard.writeText(t).then(done,()=>{b.textContent=t})}catch(_){b.textContent=t}
+  }
+});
+document.getElementById("q").addEventListener("input",e=>{q=e.target.value;render()});
+render();
+</script>
+</body></html>
